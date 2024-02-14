@@ -1,0 +1,52 @@
+{
+  "vms": [
+    {
+      "id": "1",
+      "tag": "someBrutalBigLongTagWithNumbersAndLetters",
+      "ipApp": "10.145.593.291",
+      "ipDB": "10.523.786.124",
+      "password": "jfhubejgknlekjrgneirgjeomnjifernbfiwebfpiwenfregnreignobwhefbw",
+      "status": "ON"
+    },
+    {
+      "id": "2",
+      "tag": "erg",
+      "ipApp": "erg",
+      "ipDB": "erg",
+      "password": "erg",
+      "status": "Off"
+    },
+    {
+      "id": "3",
+      "tag": "123",
+      "ipApp": "123",
+      "ipDB": "123",
+      "password": "123",
+      "status": "On"
+    },
+    {
+      "id": "4",
+      "tag": "421",
+      "ipApp": "142",
+      "ipDB": "124",
+      "password": "12",
+      "status": "Off"
+    },
+    {
+      "id": "5",
+      "tag": "678",
+      "ipApp": "ijh",
+      "ipDB": "uioh",
+      "password": "ugoh",
+      "status": "On"
+    },
+    {
+      "id": 0,
+      "tag": "putinChuj",
+      "ipApp": "werg",
+      "ipDB": "rweg",
+      "password": "werg",
+      "status": "Off"
+    }
+  ]
+}

@@ -1,1 +1,43 @@
 /* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+body {
+    background: #f5f5f5;
+}
+html,
+body,
+.intro {
+    height: 100%;
+}
+  
+table td,
+table th {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+  }
+  
+  .form-inline .form-control {
+    display: inline-block;
+    width: auto;
+    vertical-align: middle;
+  }
+  
+  .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -5px;
+    margin-left: -5px;
+  }
+  
+  .form-row > .col {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  
+  label {
+    margin-bottom: 0.5rem;
+  }
