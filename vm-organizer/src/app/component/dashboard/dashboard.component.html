@@ -13,11 +13,7 @@
                     <table class="table table-borderless mb-0">
                       <thead>
                         <tr>
-                          <th scope="col">
-                            <div class="form-check">
-                              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                            </div>
-                          </th>
+                          <th scope="col"></th>
                           <th scope="col">TAG</th>
                           <th scope="col">IP APP</th>
                           <th scope="col">IP DB</th>
@@ -29,10 +25,10 @@
                         <tr *ngFor="let vm of vmArr | searchVms: searchVm">
                           <th scope="row">
                             <div class="form-check">
-                              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" checked/>
+                              <input class="form-check-input" type="checkbox" (change)="onChange(vm.id)" [value]="vm.id"/>
                             </div>
                           </th>
-                          <td>{{ vm.tag }}</td>
+                          <td>{{ vm.id }}</td>
                           <td>{{ vm.ipApp }}</td>
                           <td>{{ vm.ipDB }}</td>
                           <td>{{ vm.password }}</td>
@@ -43,7 +39,10 @@
                   </div>
                 </div>
               </div>
-              <button type="button" class="btn btn-primary px-3 mt-4" (click)="openDialog()">Add VM</button>
+              <div class="footer-btn">
+                <button type="button" class="btn btn-primary px-3 mt-4 me-3" (click)="openDialogForAdding()">Add VM</button>
+                <button type="button" class="btn btn-primary px-3 mt-4" (click)="openDialogForEdit()">Edit VM</button>
+              </div>
             </div>
           </div>
         </div>

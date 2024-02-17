@@ -1,0 +1,55 @@
+<div class="card ">
+    <div class="card-header">
+        <!-- Credit card form content -->
+        <div class="tab-content">
+            <!-- credit card info-->
+            <div id="credit-card" class="tab-pane fade show active pt-3">
+                <form [formGroup]="vmForm" role="form" (ngSubmit)="onSubmit()">
+                    <div class="form-group"> 
+                        <label for="username"><h6>Tag</h6></label> 
+                        <input type="text" name="vmId" required [disabled]="true" class="form-control" formControlName="id">
+                    </div>
+                    <div class="form-group">
+                        <label for="cardNumber"><h6>Password</h6></label>
+                        <input type="text" name="vmPassword" class="form-control " formControlName="password" required>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group mb-4">
+                                <label data-toggle="tooltip">
+                                    <h6>IP APP</h6>
+                                </label>
+                                <input type="text" required class="form-control" formControlName="ipApp"> 
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group mb-4">
+                                <label data-toggle="tooltip">
+                                    <h6>IP DB</h6>
+                                </label>
+                                <input type="text" required class="form-control" formControlName="ipDB"> 
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group mb-4">
+                                <label><h6>Status</h6></label>
+                                <div class="btn-group btn-toggle" data-toggle="buttons" id="switchBtn">
+                                    <label class="btn btn-primary active">
+                                      <input type="radio" name="status" value="On" checked formControlName="status"> On
+                                    </label>
+                                    <label class="btn btn-default">
+                                      <input type="radio" name="status" value="Off" formControlName="status"> Off
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="subscribe btn btn-primary col-12 shadow-sm"> Edit </button>
+                    </div>
+                </form>
+            </div>
+        </div> <!-- End -->
+    </div> <!-- End -->
+    <!-- End -->
+</div>

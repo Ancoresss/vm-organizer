@@ -8,6 +8,10 @@
     width: 100%;
 }
 
+.footer-btn {
+    text-align: center;
+}
+
 .rounded-lg {
     border-radius: 1rem;
 }

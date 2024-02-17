@@ -11,7 +11,11 @@ export class SearchVm implements PipeTransform {
         }
 
         return vms.filter(vm => {
-            return vm.tag.toLowerCase().includes(searchStr.toLowerCase())
+            return (vm.id.toLowerCase().includes(searchStr.toLowerCase()) ||
+                    vm.ipApp.toLowerCase().includes(searchStr.toLowerCase()) ||
+                    vm.ipDB.toLowerCase().includes(searchStr.toLowerCase()) ||
+                    vm.password.toLowerCase().includes(searchStr.toLowerCase()) ||
+                    vm.status.toLowerCase().includes(searchStr.toLowerCase()))
         })
     }
 }
