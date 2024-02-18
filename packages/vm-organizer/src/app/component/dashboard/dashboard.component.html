@@ -32,7 +32,12 @@
                           <td>{{ vm.ipApp }}</td>
                           <td>{{ vm.ipDB }}</td>
                           <td>{{ vm.password }}</td>
-                          <td>{{ vm.status }}</td>
+                          <td>
+                            <button type="button"
+                                    [ngClass]="vm.status == 'ON' ? 'btn-success' : 'btn-danger'" 
+                                    class="btn btn-primary px-3"
+                                    (click)="editStatus(vm)">{{ vm.status }}</button>
+                          </td>
                         </tr>
                       </tbody>
                     </table>
@@ -41,7 +46,7 @@
               </div>
               <div class="footer-btn">
                 <button type="button" class="btn btn-primary px-3 mt-4 me-3" (click)="openDialogForAdding()">Add VM</button>
-                <button type="button" class="btn btn-primary px-3 mt-4" (click)="openDialogForEdit()">Edit VM</button>
+                <button type="button" class="btn btn-primary px-3 mt-4" (click)="deleteVm()">Delete VM</button>
               </div>
             </div>
           </div>

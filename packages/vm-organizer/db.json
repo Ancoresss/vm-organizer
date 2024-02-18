@@ -1,0 +1,32 @@
+{
+  "vms": [
+    {
+      "id": "someBrutalBigLongTagWithNumbersAndLetters",
+      "ipApp": "103.145.593.291",
+      "ipDB": "10.523.786.124",
+      "password": "jfhubejgknlekjrgneirgjeomnjifernbfiwebfpiwenfregnreignobwhefbw",
+      "status": "ON"
+    },
+    {
+      "id": "fe",
+      "ipApp": "wef",
+      "ipDB": "wef",
+      "password": "ewf",
+      "status": "ON"
+    },
+    {
+      "id": "eqrg",
+      "ipApp": "erg",
+      "ipDB": "dfsb",
+      "password": "qerg",
+      "status": "ON"
+    },
+    {
+      "id": "eragea",
+      "ipApp": "eqrger",
+      "ipDB": "asdfvads",
+      "password": "afsdvfda",
+      "status": "ON"
+    }
+  ]
+}

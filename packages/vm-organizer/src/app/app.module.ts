@@ -10,15 +10,13 @@ import { PopappformComponent } from './component/popappform/popappform.component
 import { MatDialogModule } from '@angular/material/dialog'
 
 import { SearchVm } from './shared/search.pipe';
-import { PopappformeditComponent } from './component/popappformedit/popappformedit.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     PopappformComponent,
-    SearchVm,
-    PopappformeditComponent
+    SearchVm
   ],
   imports: [
     BrowserModule,

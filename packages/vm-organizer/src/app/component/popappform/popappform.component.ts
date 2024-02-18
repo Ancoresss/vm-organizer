@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class PopappformComponent {
     vm : Vm = new Vm();
+    isEnabled = false;
 
     vmForm = new FormGroup ({
         vmTag : new FormControl(''),
@@ -28,7 +29,11 @@ export class PopappformComponent {
         this.vm.ipDB = this.vmForm.value.vmIpDb!
         this.vm.id = this.vmForm.value.vmTag!
         this.vm.password = this.vmForm.value.vmPassword!
-        this.vm.status = this.vmForm.value.vmStatus!
+        if (this.vmForm.value.vmStatus === '') {
+            this.vm.status = 'OFF'
+        } else {
+            this.vm.status = this.vmForm.value.vmStatus!
+        }
         
         this.addVm(this.vm);
 
@@ -46,5 +51,13 @@ export class PopappformComponent {
 
     closeDialog() {
         this.dialogRed.closeAll();
+    }
+
+    enableFlag() {
+        this.isEnabled = true
+    }
+
+    disableFlag() {
+        this.isEnabled = false
     }
 }

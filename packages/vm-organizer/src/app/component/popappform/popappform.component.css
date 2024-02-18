@@ -12,7 +12,8 @@
     color: white
 }
 input[type="radio"]{
-    margin-right: 5px
+    margin-right: 5px;
+    display: none;
 }
 .bold{
     font-weight:bold

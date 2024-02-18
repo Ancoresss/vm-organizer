@@ -3,7 +3,6 @@ import { CrudService } from '../../service/crud.service';
 import { Vm } from '../../model/vm';
 import { MatDialog } from '@angular/material/dialog';
 import { PopappformComponent } from '../popappform/popappform.component';
-import { PopappformeditComponent } from '../popappformedit/popappformedit.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -29,30 +28,19 @@ export class DashboardComponent {
         next: res => this.ngOnInit(),
         error: err => alert(err)
       })
-	  } 
-
-    openDialogForEdit(): void {
-      if (this.allSelectedVmTags.length === 1) {
-        const vm : any = this.vmArr.filter(item => item.id === this.allSelectedVmTags[0])[0]
-        var popup = this.dialogRed.open(PopappformeditComponent, {
-          data: { vm }
-        } );
-        popup.afterClosed().subscribe({
-          next: res => this.ngOnInit(),
-          error: err => alert(err)
-        })
-      } else {
-        alert("Choose the 1 VM")
-      }
-	  } 
+	  }
 
     onChange(vmTag : string): void {
       if (this.allSelectedVmTags.includes(vmTag)) {
-        this.allSelectedVmTags = this.allSelectedVmTags.filter(item => item !== vmTag);
+        this.allSelectedVmTags = this.removeItem(this.allSelectedVmTags, vmTag);
       } else {
         this.allSelectedVmTags.push(vmTag);
       }
       console.log(this.allSelectedVmTags)
+    }
+
+    removeItem(array: any[], value: any) {
+      return array = array.filter(item => item !== value);
     }
 
     getAllVms() {
@@ -61,6 +49,34 @@ export class DashboardComponent {
               next: res => this.vmArr = res,
               error: err => alert("Unable to get Vms")
           }
+      );
+    }
+
+    deleteVm() {
+      for (let i = 0; i < this.vmArr.length; i++) {
+        for (let j = 0; j < this.allSelectedVmTags.length; j++) {
+          if (this.vmArr[i].id === this.allSelectedVmTags[j]) {
+            this.crudService.deleteVm(this.vmArr[i]).subscribe(
+              {
+                  next: res => this.ngOnInit(),
+                  error: err => alert("Unable to detele Vm")
+              }
+          );
+            this.vmArr = this.removeItem(this.vmArr, this.vmArr[i]);
+          }
+        }
+      }
+
+      this.allSelectedVmTags = [];
+    }
+
+    editStatus(vm: Vm) {
+      vm.status = vm.status === 'ON' ? 'OFF' : 'ON';
+      this.crudService.editVm(vm).subscribe(
+        {
+            next: res => this.ngOnInit(),
+            error: err => alert("Unable to get Vms")
+        }
       );
     }
 }
