@@ -44,7 +44,7 @@ export class PopappformComponent {
         this.crudService.addVm(vm).subscribe(
             {
                 next: res => this.closeDialog(),
-                error: err => alert(err)
+                error: err => console.log(err)
             }
         );
     }

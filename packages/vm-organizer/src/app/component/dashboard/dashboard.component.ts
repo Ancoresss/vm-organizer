@@ -58,16 +58,17 @@ export class DashboardComponent {
           if (this.vmArr[i].id === this.allSelectedVmTags[j]) {
             this.crudService.deleteVm(this.vmArr[i]).subscribe(
               {
-                  next: res => this.ngOnInit(),
+                  next: res => {
+                    this.vmArr = this.removeItem(this.vmArr, this.vmArr[i]);
+                    this.allSelectedVmTags = this.removeItem(this.allSelectedVmTags, this.allSelectedVmTags[j])
+                    this.ngOnInit()
+                  },
                   error: err => alert("Unable to detele Vm")
               }
           );
-            this.vmArr = this.removeItem(this.vmArr, this.vmArr[i]);
           }
         }
       }
-
-      this.allSelectedVmTags = [];
     }
 
     editStatus(vm: Vm) {

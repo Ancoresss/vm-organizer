@@ -27,6 +27,6 @@ export class CrudService {
 	}
 
 	editVm(vm : Vm) : Observable<Vm> {
-		return this.http.put<Vm>(this.serviceUrl + "/" + vm.id, vm);
+		return this.http.put<Vm>(this.serviceUrl, vm);
 	}
 }
