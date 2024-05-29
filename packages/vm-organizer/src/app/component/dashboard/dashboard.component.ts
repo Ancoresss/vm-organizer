@@ -3,6 +3,8 @@ import { CrudService } from '../../service/crud.service';
 import { Vm } from '../../model/vm';
 import { MatDialog } from '@angular/material/dialog';
 import { PopappformComponent } from '../popappform/popappform.component';
+import { Clipboard } from '@angular/cdk/clipboard';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,7 +17,9 @@ export class DashboardComponent {
     allSelectedVmTags: string[] = [];
 
     constructor(private crudService : CrudService,
-                private dialogRed : MatDialog) {}
+                private dialogRed : MatDialog,
+                private clipboard: Clipboard,
+                private snackBar: MatSnackBar) {}
 
     ngOnInit() {
       this.getAllVms();
@@ -79,5 +83,14 @@ export class DashboardComponent {
             error: err => alert("Unable to get Vms")
         }
       );
+    }
+
+    copyText(text: string) {
+      this.snackBar.open('Copied!', undefined, { 
+        duration: 2000,
+        horizontalPosition: 'right',
+        verticalPosition: 'top'
+       })
+      this.clipboard.copy(text);
     }
 }

@@ -8,6 +8,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { PopappformComponent } from './component/popappform/popappform.component';
 import { MatDialogModule } from '@angular/material/dialog'
+import { ClipboardModule } from '@angular/cdk/clipboard';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { SearchVm } from './shared/search.pipe';
 
@@ -24,7 +26,9 @@ import { SearchVm } from './shared/search.pipe';
     FormsModule,
     HttpClientModule,
     MatDialogModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ClipboardModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
