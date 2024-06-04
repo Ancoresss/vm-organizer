@@ -10,7 +10,7 @@ import { PopappformComponent } from './component/popappform/popappform.component
 import { MatDialogModule } from '@angular/material/dialog'
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { MatTabsModule } from '@angular/material/tabs';
 import { SearchVm } from './shared/search.pipe';
 
 @NgModule({
@@ -28,6 +28,7 @@ import { SearchVm } from './shared/search.pipe';
     MatDialogModule,
     ReactiveFormsModule,
     ClipboardModule,
+    MatTabsModule,
     BrowserAnimationsModule
   ],
   providers: [],

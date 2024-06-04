@@ -1,11 +1,13 @@
 <section class="intro">
-    <div class="bg-image h-100" style="background-color: #6095F0;">
+    <div class="bg-image h-100" style="background-color: #26648E;">
       <div class="mask d-flex align-items-center h-100">
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-12" id="main">
               <div class="card shadow-2-strong" style="background-color: #f5f7fa;">
                 <div class="card-body">
+                  <mat-tab-group>
+                    <mat-tab label="VMs">
                   <div class="table-responsive">
                     <div class="input-group rounded mb-2 p-2">
                         <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" [(ngModel)]="searchVm"/>
@@ -37,7 +39,7 @@
                           <td (click)="copyText(vm.password)">{{ vm.password }}</td>
                           <td>
                             <button type="button"
-                                    [ngClass]="vm.status == 'ON' ? 'btn-success' : 'btn-danger'" 
+                                    [ngClass]="vm.status == 'ON' ? 'btn-success' : 'btn-danger'"
                                     class="btn btn-primary px-3"
                                     (click)="editStatus(vm)">{{ vm.status }}</button>
                           </td>
@@ -45,7 +47,12 @@
                       </tbody>
                     </table>
                   </div>
+                    </mat-tab>
+                    <mat-tab label="To do">To do list
+                    </mat-tab>
+                  </mat-tab-group>
                 </div>
+
               </div>
               <div class="footer-btn">
                 <button type="button" class="btn btn-primary px-3 mt-4 me-3" (click)="openDialogForAdding()">Add VM</button>
