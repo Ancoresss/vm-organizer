@@ -45,3 +45,11 @@
   background-color: #fff;
 }
 
+.mat-mdc-tab-group, .mat-mdc-tab-nav-bar {
+  --mdc-tab-indicator-active-indicator-color: #AFD2E9;
+  --mat-tab-header-active-label-text-color: #2d3042;
+  --mat-tab-header-active-hover-label-text-color: #2d3042;
+  --mat-tab-header-active-hover-indicator-color: #AFD2E9;
+  --mat-tab-header-active-focus-label-text-color: #2d3042;
+  --mat-tab-header-active-focus-indicator-color: #AFD2E9;
+}

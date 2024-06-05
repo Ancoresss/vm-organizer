@@ -3,11 +3,13 @@ import { CrudService } from '../../service/crud.service';
 import { Vm } from '../../model/vm';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import {ViewEncapsulation} from '@angular/core';
 
 @Component({
   selector: 'app-popappform',
   templateUrl: './popappform.component.html',
-  styleUrl: './popappform.component.css'
+  styleUrl: './popappform.component.css',
+  encapsulation: ViewEncapsulation.None
 })
 export class PopappformComponent {
     vm : Vm = new Vm();
@@ -34,7 +36,7 @@ export class PopappformComponent {
         } else {
             this.vm.status = this.vmForm.value.vmStatus!
         }
-        
+
         this.addVm(this.vm);
 
         this.vm = new Vm();
