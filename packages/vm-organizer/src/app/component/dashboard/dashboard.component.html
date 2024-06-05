@@ -48,15 +48,18 @@
                     </table>
                   </div>
                     </mat-tab>
-                    <mat-tab label="To do">To do list
+                    <mat-tab label="To do">
+                      <div class="input-group rounded mb-2 p-2">
+                        <input type="text" class="form-control rounded" placeholder="Enter task"/>
+                      </div>
                     </mat-tab>
                   </mat-tab-group>
                 </div>
 
               </div>
               <div class="footer-btn">
-                <button type="button" class="btn btn-primary px-3 mt-4 me-3" (click)="openDialogForAdding()">Add VM</button>
-                <button type="button" class="btn btn-primary px-3 mt-4" (click)="deleteVm()">Delete VM</button>
+                <button type="button" class="btn btn-custom px-3 mt-4 me-3" (click)="openDialogForAdding()">Add VM</button>
+                <button type="button" class="btn btn-custom px-3 mt-4" (click)="deleteVm()">Delete VM</button>
               </div>
             </div>
           </div>
