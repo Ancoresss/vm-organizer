@@ -86,11 +86,15 @@ export class DashboardComponent {
     }
 
     copyText(text: string) {
-      this.snackBar.open('Copied!', undefined, { 
+      this.snackBar.open('Copied!', undefined, {
         duration: 2000,
         horizontalPosition: 'right',
         verticalPosition: 'top'
        })
-      this.clipboard.copy(text);
+     const textClear = text.trim();
+     this.clipboard.copy(textClear);
     }
+
+
+
 }

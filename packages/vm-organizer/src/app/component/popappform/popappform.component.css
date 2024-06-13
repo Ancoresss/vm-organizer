@@ -18,3 +18,11 @@ input[type="radio"]{
 .bold{
     font-weight:bold
 }
+
+.btn-custom{
+  background-color:#AFD2E9;
+}
+
+.btn.btn-custom:hover {
+  background-color: #fff;
+}

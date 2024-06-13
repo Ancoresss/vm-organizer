@@ -23,7 +23,9 @@
                           <th scope="col">IP APP</th>
                           <th scope="col">IP DB</th>
                           <th scope="col">PASSWORD</th>
+                          <th scope="col">NOTE</th>
                           <th scope="col">STATUS</th>
+
                         </tr>
                       </thead>
                       <tbody>
@@ -37,10 +39,11 @@
                           <td (click)="copyText(vm.ipApp)">{{ vm.ipApp }}</td>
                           <td (click)="copyText(vm.ipDB)">{{ vm.ipDB }}</td>
                           <td (click)="copyText(vm.password)">{{ vm.password }}</td>
+                          <td><button type = "button" class="note-button"><img src="/assets/wirte.png" alt="image" class="note-img"></button></td>
                           <td>
                             <button type="button"
                                     [ngClass]="vm.status == 'ON' ? 'btn-success' : 'btn-danger'"
-                                    class="btn btn-primary px-3"
+                                    class="btn btn-toggle px-3"
                                     (click)="editStatus(vm)">{{ vm.status }}</button>
                           </td>
                         </tr>

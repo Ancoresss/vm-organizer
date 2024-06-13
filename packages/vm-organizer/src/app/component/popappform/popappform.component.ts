@@ -20,6 +20,7 @@ export class PopappformComponent {
         vmPassword : new FormControl(''),
         vmIpApp : new FormControl(''),
         vmIpDb : new FormControl(''),
+        vmNote : new FormControl(''),
         vmStatus : new FormControl('')
     })
 
@@ -31,6 +32,7 @@ export class PopappformComponent {
         this.vm.ipDB = this.vmForm.value.vmIpDb!
         this.vm.id = this.vmForm.value.vmTag!
         this.vm.password = this.vmForm.value.vmPassword!
+        this.vm.note = this.vmForm.value.vmNote!
         if (this.vmForm.value.vmStatus === '') {
             this.vm.status = 'OFF'
         } else {

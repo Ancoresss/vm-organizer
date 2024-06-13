@@ -3,5 +3,6 @@ export class Vm {
     ipApp : string = '';
     ipDB : string = '';
     password : string = '';
+    note : string = '';
     status : string = '';
 }

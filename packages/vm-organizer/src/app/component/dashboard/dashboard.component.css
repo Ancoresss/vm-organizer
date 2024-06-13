@@ -47,7 +47,7 @@
 
 .mat-mdc-tab-group, .mat-mdc-tab-nav-bar {
   --mdc-tab-indicator-active-indicator-color: #AFD2E9;
-  --mat-tab-header-active-label-text-color: #AFD2E9;
+  --mat-tab-header-active-label-text-color: #26648E;
   --mat-tab-header-active-hover-label-text-color: #2d3042;
   --mat-tab-header-active-hover-indicator-color: #AFD2E9;
   --mat-tab-header-active-focus-label-text-color: #2d3042;
@@ -58,4 +58,23 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.btn-toggle{
+  width: 70px;
+  display: block;
+  margin: auto;
+}
+
+th,td {
+  text-align: center;
+}
+
+.note-img{
+  height:20px;
+}
+
+.note-button{
+  background-color: transparent;
+  border: none;
 }
