@@ -5,6 +5,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { PopappformComponent } from '../popappform/popappform.component';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SpotinstService } from '../../service/spotinst.service';
+import { concat, concatMap } from 'rxjs';
+import { delay, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,11 +18,13 @@ export class DashboardComponent {
     vmArr : Vm[] = [];
     searchVm = '';
     allSelectedVmTags: string[] = [];
+    spotInstances: any = [];
 
     constructor(private crudService : CrudService,
                 private dialogRed : MatDialog,
                 private clipboard: Clipboard,
-                private snackBar: MatSnackBar) {}
+                private snackBar: MatSnackBar,
+                private spotInstService : SpotinstService) {}
 
     ngOnInit() {
       this.getAllVms();
@@ -83,6 +88,64 @@ export class DashboardComponent {
             error: err => alert("Unable to get Vms")
         }
       );
+      this.spotInstService.getInstanceFromFile().pipe(
+        tap(res => {
+          for (let i = 0; i < res.length; i++) {
+            if (res[i].tag.includes(vm.id)) {
+              this.spotInstances.push({tag: res[i].tag, groupId: res[i].groupId, statefulId: res[i].statefulId});
+            }
+          }
+        }),
+        concatMap(res => {
+          let app_inst = this.spotInstances.filter((inst: any) => inst.tag.includes('ais_rcm'))[0];
+          let db_inst = this.spotInstances.filter((inst: any) => !inst.tag.includes('ais_rcm'))[0];
+          if (vm.status === 'ON') {
+            return this.spotInstService.startInstance(db_inst.groupId, db_inst.statefulId).pipe(
+              tap(res => {
+                let intervalStatus = setInterval(() => {
+                  this.spotInstService.getInstanceInfoByGroupId(db_inst.groupId).subscribe({
+                    next: (res: any) => {
+                        if (res.response.items[0].state === 'ACTIVE') {
+                          this.spotInstService.startInstance(app_inst.groupId, app_inst.statefulId).subscribe({
+                            next: (res: any) => {console.log("starting app instance")},
+                            error: err => console.log(err)
+                          })
+                          clearInterval(intervalStatus);
+                        }
+                      },
+                      error: err => console.log(err)
+                    });
+                }, 15000);
+                console.log("starting db instance")
+              })
+            )
+          } else {
+            return this.spotInstService.stopInstance(app_inst.groupId, app_inst.statefulId).pipe(
+              tap(res => {
+                let intervalStatus = setInterval(() => {
+                  this.spotInstService.getInstanceInfoByGroupId(app_inst.groupId).subscribe({
+                    next: (res: any) => {
+                      console.log("pausing: " + res.response.items[0].state);
+                      if (res.response.items[0].state === 'PAUSED') {
+                        this.spotInstService.stopInstance(db_inst.groupId, db_inst.statefulId).subscribe({
+                          next: (res: any) => {console.log("stopping db instance")},
+                          error: err => console.log(err)
+                        })
+                        clearInterval(intervalStatus);
+                      }
+                    },
+                    error: err => console.log(err)
+                  });
+                }, 15000);
+                console.log("pausing app instance")
+              })
+            )
+          }
+        })
+      ).subscribe({
+        next: res => console.log("Machines are preparing to start/stop"),
+        error: err => console.log(err)
+      })
     }
 
     copyText(text: string) {
