@@ -12,13 +12,15 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTabsModule } from '@angular/material/tabs';
 import { SearchVm } from './shared/search.pipe';
+import { PoppappnoteComponent } from './component/poppappnote/poppappnote.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     PopappformComponent,
-    SearchVm
+    SearchVm,
+    PoppappnoteComponent
   ],
   imports: [
     BrowserModule,

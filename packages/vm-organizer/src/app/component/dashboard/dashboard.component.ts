@@ -8,6 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { SpotinstService } from '../../service/spotinst.service';
 import { concat, concatMap } from 'rxjs';
 import { delay, tap } from 'rxjs/operators';
+import { PoppappnoteComponent } from '../poppappnote/poppappnote.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,6 +17,7 @@ import { delay, tap } from 'rxjs/operators';
 })
 export class DashboardComponent {
     vmArr : Vm[] = [];
+    vmForNote: Vm = new Vm;
     searchVm = '';
     allSelectedVmTags: string[] = [];
     spotInstances: any = [];
@@ -33,6 +35,14 @@ export class DashboardComponent {
 
     openDialogForAdding() {
 		  var popup = this.dialogRed.open(PopappformComponent);
+      popup.afterClosed().subscribe({
+        next: res => this.ngOnInit(),
+        error: err => alert(err)
+      })
+	  }
+
+    openDialogForNote(vmForNote: Vm) {
+		  var popup = this.dialogRed.open(PoppappnoteComponent, {data: vmForNote});
       popup.afterClosed().subscribe({
         next: res => this.ngOnInit(),
         error: err => alert(err)

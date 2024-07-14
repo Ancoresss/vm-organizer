@@ -26,6 +26,7 @@ export class PopappformComponent {
         vmIpDb : new FormControl(''),
         vmNote : new FormControl(''),
         vmStatus : new FormControl('')
+        
     })
 
     constructor(private crudService : CrudService,
@@ -37,7 +38,7 @@ export class PopappformComponent {
         this.vm.ipDB = this.vmForm.value.vmIpDb!
         this.vm.id = this.vmForm.value.vmTag!
         this.vm.password = this.vmForm.value.vmPassword!
-        this.vm.note = this.vmForm.value.vmNote!
+        this.vm.note = ''
         if (this.vmForm.value.vmStatus === '') {
             this.vm.status = 'OFF'
         } else {

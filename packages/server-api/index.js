@@ -124,4 +124,34 @@ app.get("/getSpotInstance", (req, res) => {
 
 });
 
+
+app.post("/vms/note", (req, res) => {
+    console.log(req)
+
+    const content = req.body;
+    let dbJsonData = []
+
+	if (!content) {
+		return res.sendStatus(400);
+	}
+
+    // with 'utf-8' part the function returns string instead of buffer
+    const vms = fs.readFileSync(path.resolve(__dirname, '../vm-organizer/src/assets/db.json'), 'utf8');
+    if (vms.length !== 0) {
+        dbJsonData = JSON.parse(vms);
+    }
+
+    for (let i = 0; i < dbJsonData.length; i++) {
+        if (dbJsonData[i].id === content.id) {
+            dbJsonData[i].note = content.note;
+            break;
+        }
+    }
+
+    fs.writeFileSync(path.resolve(__dirname, '../vm-organizer/src/assets/db.json'), JSON.stringify(dbJsonData));
+
+    res.sendStatus(204)
+
+})
+
 app.listen(3000, () => console.log("API Server is running..."));

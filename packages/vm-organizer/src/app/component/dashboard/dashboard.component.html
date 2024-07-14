@@ -39,7 +39,7 @@
                           <td (click)="copyText(vm.ipApp)">{{ vm.ipApp }}</td>
                           <td (click)="copyText(vm.ipDB)">{{ vm.ipDB }}</td>
                           <td (click)="copyText(vm.password)">{{ vm.password }}</td>
-                          <td><button type = "button" class="note-button"><img src="/assets/wirte.png" alt="image" class="note-img"></button></td>
+                          <td><button type = "button" class="note-button"><img src="/assets/wirte.png" alt="image" (click)="openDialogForNote(vm)" class="note-img"></button></td>
                           <td>
                             <button type="button"
                                     [ngClass]="vm.status == 'ON' ? 'btn-success' : 'btn-danger'"
