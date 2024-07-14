@@ -38,7 +38,7 @@
 }
 
 .btn-custom{
-  background-color:#AFD2E9;
+  background-color:#6dd5ed
 }
 
 .btn.btn-custom:hover {
@@ -77,4 +77,12 @@ th,td {
 .note-button{
   background-color: transparent;
   border: none;
+}
+
+.gradient {
+  background: #2193b0;
+  background: linear-gradient(
+    to right,
+    #2193b0,#6dd5ed
+  );
 }
