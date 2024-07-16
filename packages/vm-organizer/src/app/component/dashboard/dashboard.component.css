@@ -42,6 +42,10 @@
  color: white; 
 }
 
+.btn-bug{
+  border: 2px solid rgb(226, 224, 224);
+}
+
 .btn-success{
 background-color: white;
 color: black;
@@ -113,4 +117,12 @@ th, td {
     to right,
     #4e54c8,#8f94fb
   );
+}
+
+.reportBug{
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin: 20px;
+  padding: 10px 20px;
 }
