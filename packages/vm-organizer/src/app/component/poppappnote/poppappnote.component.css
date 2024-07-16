@@ -11,3 +11,7 @@
     border-top:none;
     
 }
+
+textarea{
+  resize: both;
+}
