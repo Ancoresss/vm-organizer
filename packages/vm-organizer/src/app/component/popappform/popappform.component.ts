@@ -57,6 +57,10 @@ export class PopappformComponent {
                 error: err => console.log(err)
             }
         );
+
+        this.spotInstancesPartial = [];
+        this.spotInstancesFull = [];
+
         this.spotInstService.getInstancesGroupId().pipe(
             // get full tag and groupId from SpotInst API for APP/DB instances of specific tag
             concatMap(res => {

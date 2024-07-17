@@ -98,6 +98,9 @@ export class DashboardComponent {
             error: err => alert("Unable to get Vms")
         }
       );
+
+      this.spotInstances = []
+
       this.spotInstService.getInstanceFromFile().pipe(
         tap(res => {
           for (let i = 0; i < res.length; i++) {
@@ -117,7 +120,7 @@ export class DashboardComponent {
                     next: (res: any) => {
                         if (res.response.items[0].state === 'ACTIVE') {
                           this.spotInstService.startInstance(app_inst.groupId, app_inst.statefulId).subscribe({
-                            next: (res: any) => {console.log("starting app instance")},
+                            next: (res: any) => {console.log("starting app instance: " + app_inst.tag)},
                             error: err => console.log(err)
                           })
                           clearInterval(intervalStatus);
@@ -126,28 +129,16 @@ export class DashboardComponent {
                       error: err => console.log(err)
                     });
                 }, 15000);
-                console.log("starting db instance")
+                console.log("starting db instance: " + db_inst.tag)
               })
             )
           } else {
             return this.spotInstService.stopInstance(app_inst.groupId, app_inst.statefulId).pipe(
               tap(res => {
-                let intervalStatus = setInterval(() => {
-                  this.spotInstService.getInstanceInfoByGroupId(app_inst.groupId).subscribe({
-                    next: (res: any) => {
-                      console.log("pausing: " + res.response.items[0].state);
-                      if (res.response.items[0].state === 'PAUSED') {
-                        this.spotInstService.stopInstance(db_inst.groupId, db_inst.statefulId).subscribe({
-                          next: (res: any) => {console.log("stopping db instance")},
-                          error: err => console.log(err)
-                        })
-                        clearInterval(intervalStatus);
-                      }
-                    },
-                    error: err => console.log(err)
-                  });
-                }, 15000);
-                console.log("pausing app instance")
+                return this.spotInstService.stopInstance(db_inst.groupId, db_inst.statefulId).subscribe({
+                  next: (res: any) => {},
+                  error: err => console.log(err)
+                })
               })
             )
           }
