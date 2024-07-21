@@ -1,11 +1,13 @@
 .btn-custom{
-    background-color:#6dd5ed;
-  }
-  
-  .btn.btn-custom:hover {
-    background-color: #fff;
-  }
-  
+  background-color:#4F80E2;
+  color: white; 
+ }
+ 
+ .btn.btn-custom:hover {
+   background-color: #fff;
+   color:#3E54D3 ;
+ }
+ 
 .card-footer{
     background-color: rgba(0, 0, 0, 0);
     border-top:none;
