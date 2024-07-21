@@ -25,8 +25,8 @@ input[type="radio"]{
    }
    
 .btn.btn-custom:hover {
-     background-color: #fff;
-     color:#3E54D3 ;
+     background-color: #4F80E2;
+     color:white ;
    }
  
 .card-footer{

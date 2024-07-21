@@ -126,3 +126,36 @@ th, td {
   margin: 20px;
   padding: 10px 20px;
 }
+
+
+.btn-toggle {
+  position: relative;
+  width: 60px;
+  height: 34px;
+  border: none;
+  border-radius: 34px;
+  cursor: pointer;
+  background-color: grey;
+  transition: background-color 0.4s;
+  outline: none;
+}
+
+.btn-toggle:before {
+  content: "";
+  position: absolute;
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.4s;
+}
+
+.switch-on {
+  background-color: #4FE0B6;
+}
+
+.switch-on:before {
+  transform: translateX(26px);
+}
