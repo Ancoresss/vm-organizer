@@ -1,0 +1,3 @@
+- close "add vm" popup after VM will be added to db.json and instances.json
+- change VM status after VM status switched on the SPOT
+- every morning check VM status on SPOT and update on the UI
