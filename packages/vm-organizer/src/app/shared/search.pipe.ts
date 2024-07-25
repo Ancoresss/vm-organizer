@@ -15,7 +15,8 @@ export class SearchVm implements PipeTransform {
                     vm.ipApp.toLowerCase().includes(searchStr.toLowerCase()) ||
                     vm.ipDB.toLowerCase().includes(searchStr.toLowerCase()) ||
                     vm.password.toLowerCase().includes(searchStr.toLowerCase()) ||
-                    vm.status.toLowerCase().includes(searchStr.toLowerCase()))
+                    vm.status.toLowerCase().includes(searchStr.toLowerCase()) ||
+                    vm.note.toLowerCase().includes(searchStr.toLowerCase()))
         })
     }
 }
