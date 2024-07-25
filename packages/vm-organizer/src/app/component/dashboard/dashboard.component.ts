@@ -91,14 +91,7 @@ export class DashboardComponent {
     }
 
     editStatus(vm: Vm) {
-      vm.status = vm.status === 'ON' ? 'OFF' : 'ON';
-      this.crudService.editVm(vm).subscribe(
-        {
-            next: res => this.ngOnInit(),
-            error: err => alert("Unable to get Vms")
-        }
-      );
-
+      let editStatus = vm.status === 'ON' ? 'OFF' : 'ON';
       this.spotInstances = []
 
       this.spotInstService.getInstanceFromFile().pipe(
@@ -112,7 +105,7 @@ export class DashboardComponent {
         concatMap(res => {
           let app_inst = this.spotInstances.filter((inst: any) => inst.tag.includes('ais_rcm'))[0];
           let db_inst = this.spotInstances.filter((inst: any) => !inst.tag.includes('ais_rcm'))[0];
-          if (vm.status === 'ON') {
+          if (editStatus === 'ON') {
             return this.spotInstService.startInstance(db_inst.groupId, db_inst.statefulId).pipe(
               tap(res => {
                 let intervalStatus = setInterval(() => {
@@ -120,7 +113,14 @@ export class DashboardComponent {
                     next: (res: any) => {
                         if (res.response.items[0].state === 'ACTIVE') {
                           this.spotInstService.startInstance(app_inst.groupId, app_inst.statefulId).subscribe({
-                            next: (res: any) => {console.log("starting app instance: " + app_inst.tag)},
+                            next: (res: any) => {
+                              vm.status = vm.status === 'ON' ? 'OFF' : 'ON';
+                              this.crudService.editVm(vm).subscribe({
+                                next: res => this.ngOnInit(),
+                                error: err => console.log(err)
+                              });
+                              console.log("starting app instance: " + app_inst.tag)
+                            },
                             error: err => console.log(err)
                           })
                           clearInterval(intervalStatus);
@@ -136,7 +136,13 @@ export class DashboardComponent {
             return this.spotInstService.stopInstance(app_inst.groupId, app_inst.statefulId).pipe(
               tap(res => {
                 return this.spotInstService.stopInstance(db_inst.groupId, db_inst.statefulId).subscribe({
-                  next: (res: any) => {},
+                  next: (res: any) => {
+                    vm.status = vm.status === 'ON' ? 'OFF' : 'ON';
+                    this.crudService.editVm(vm).subscribe({
+                      next: res => this.ngOnInit(),
+                      error: err => console.log(err)
+                    });
+                  },
                   error: err => console.log(err)
                 })
               })
