@@ -145,7 +145,15 @@ export class DashboardComponent {
         })
       ).subscribe({
         next: res => console.log("Machines are preparing to start/stop"),
-        error: err => console.log(err)
+        error: err => {
+          if (err.status === 400) {
+            this.errorText('Error 400. Probably instance is resuming/pausing.')
+          } else if (err.status === 401) {
+            this.errorText('Error 401. Probably spotinstConfig.json has bad configuration.')
+          } else {
+            console.log(err)
+          }
+        }
       })
     }
 
@@ -157,6 +165,14 @@ export class DashboardComponent {
        })
      const textClear = text.trim();
      this.clipboard.copy(textClear);
+    }
+
+    errorText(text: string) {
+      this.snackBar.open(text, undefined, {
+        duration: 6000,
+        horizontalPosition: 'right',
+        verticalPosition: 'top'
+       })
     }
 
 
