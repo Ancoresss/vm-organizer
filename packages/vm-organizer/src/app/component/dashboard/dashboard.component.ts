@@ -6,8 +6,8 @@ import { PopappformComponent } from '../popappform/popappform.component';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SpotinstService } from '../../service/spotinst.service';
-import { concat, concatMap } from 'rxjs';
-import { delay, tap } from 'rxjs/operators';
+import { concatMap } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { PoppappnoteComponent } from '../poppappnote/poppappnote.component';
 
 @Component({
@@ -163,6 +163,49 @@ export class DashboardComponent {
       })
     }
 
+    refreshStatus() {
+      console.log("refresh status")
+      this.spotInstService.getInstanceFromFile().pipe(
+        tap((res: any) => {
+          res.forEach((element: any) => {
+            this.spotInstService.getInstanceInfoByGroupId(element.groupId).pipe(
+              concatMap((res: any) => this.crudService.getAllVms().pipe(
+                tap((resInner: any) => resInner.forEach((elementResInner: any) => {
+                  if (element.tag.includes(elementResInner.id)) {
+                    switch(res.response.items[0].state) {
+                      case 'PAUSED': {
+                        elementResInner.status = 'OFF';
+                        break;
+                      }
+                      case 'ACTIVE': {
+                        elementResInner.status = 'ON';
+                        break;
+                      }
+                      default: {
+                        elementResInner.status = 'LOADING';
+                        break;
+                      }
+                    }
+                    this.crudService.editVm(elementResInner).subscribe({
+                      next: res => console.log(),
+                      error: err => console.log(err)
+                    })
+                  }
+                }))
+              ))
+            ).subscribe({
+              next: res => console.log(),
+              error: err => console.log(err)
+            })
+          });
+        })
+      ).subscribe({
+        next: res => console.log(),
+        error: err => console.log(err)
+      })
+      this.ngOnInit();
+    }
+
     copyText(text: string) {
       this.snackBar.open('Copied!', undefined, {
         duration: 2000,
@@ -180,7 +223,5 @@ export class DashboardComponent {
         verticalPosition: 'top'
        })
     }
-
-
 
 }

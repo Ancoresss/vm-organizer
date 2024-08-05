@@ -127,6 +127,9 @@ th, td {
   padding: 10px 20px;
 }
 
+.clickable {
+  cursor: pointer;
+}
 
 .btn-toggle {
   position: relative;

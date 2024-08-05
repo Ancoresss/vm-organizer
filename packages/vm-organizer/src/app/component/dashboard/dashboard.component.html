@@ -12,8 +12,15 @@
                     <div class="input-group rounded mb-2 p-2">
                         <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" [(ngModel)]="searchVm"/>
                     </div>
-                    <div>
-                      <p style="color: #B0B0B0;">-- Click on text to copy it --</p>
+                    <div class="row">
+                      <div class="d-flex">
+                        <div class="d-flex col-6">
+                          <p style="color: #B0B0B0;">-- Click on text to copy it --</p>
+                        </div>
+                        <div class="d-flex align-items-start justify-content-end col-6">
+                          <div class="me-3 clickable" (click)="refreshStatus()"><img src="../../../assets/sync.png" width="24" height="24" alt="reload"></div>
+                        </div>
+                      </div>
                     </div>
                     <table class="table table-borderless mb-0">
                       <thead>
