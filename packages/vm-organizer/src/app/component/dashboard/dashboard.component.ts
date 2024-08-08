@@ -108,22 +108,32 @@ export class DashboardComponent {
           if (editStatus === 'ON') {
             return this.spotInstService.startInstance(db_inst.groupId, db_inst.statefulId).pipe(
               tap(res => {
-                let intervalStatus = setInterval(() => {
+                let dbIntervalStatus = setInterval(() => {
                   this.spotInstService.getInstanceInfoByGroupId(db_inst.groupId).subscribe({
-                    next: (res: any) => {
-                        if (res.response.items[0].state === 'ACTIVE') {
+                    next: (resDbInfo: any) => {
+                        if (resDbInfo.response.items[0].state === 'ACTIVE') {
                           this.spotInstService.startInstance(app_inst.groupId, app_inst.statefulId).subscribe({
                             next: (res: any) => {
-                              vm.status = vm.status === 'ON' ? 'OFF' : 'ON';
-                              this.crudService.editVm(vm).subscribe({
-                                next: res => this.ngOnInit(),
-                                error: err => console.log(err)
-                              });
-                              console.log("starting app instance: " + app_inst.tag)
-                            },
+                              clearInterval(dbIntervalStatus);
+                              let appIntervalStatus = setInterval(() => {
+                                this.spotInstService.getInstanceInfoByGroupId(app_inst.groupId).subscribe({
+                                  next: (resAppInfo: any) => { 
+                                    if (resAppInfo.response.items[0].state === 'ACTIVE') {
+                                      vm.status = vm.status === 'ON' ? 'OFF' : 'ON';
+                                      this.crudService.editVm(vm).subscribe({
+                                        next: res => {          
+                                          clearInterval(appIntervalStatus)                                
+                                          this.ngOnInit()
+                                        },
+                                        error: err => console.log(err)
+                                      });
+                                    }
+                                  },
+                                  error: err => console.log(err)})
+                              }, 15000)
+                              console.log("starting app instance: " + app_inst.tag)},
                             error: err => console.log(err)
                           })
-                          clearInterval(intervalStatus);
                         }
                       },
                       error: err => console.log(err)
