@@ -75,12 +75,17 @@ export class DashboardComponent {
       for (let i = 0; i < this.vmArr.length; i++) {
         for (let j = 0; j < this.allSelectedVmTags.length; j++) {
           if (this.vmArr[i].id === this.allSelectedVmTags[j]) {
-            this.crudService.deleteVm(this.vmArr[i]).subscribe(
-              {
+            // this doesn't work, need to debug
+            this.crudService.deleteVm(this.vmArr[i]).subscribe({
                   next: res => {
-                    this.vmArr = this.removeItem(this.vmArr, this.vmArr[i]);
-                    this.allSelectedVmTags = this.removeItem(this.allSelectedVmTags, this.allSelectedVmTags[j])
-                    this.ngOnInit()
+                    this.spotInstService.deleteInstanceFromFile(this.vmArr[i]).subscribe({
+                      next: res => {
+                        this.vmArr = this.removeItem(this.vmArr, this.vmArr[i]);
+                        this.allSelectedVmTags = this.removeItem(this.allSelectedVmTags, this.allSelectedVmTags[j]);
+                        this.ngOnInit();
+                      },
+                      error: err => console.log(err)
+                    })
                   },
                   error: err => alert("Unable to detele Vm")
               }

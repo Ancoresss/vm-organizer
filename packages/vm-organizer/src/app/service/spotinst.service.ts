@@ -56,4 +56,8 @@ export class SpotinstService {
   getInstanceFromFile() : Observable<any> {
     return this.http.get<any>(this.SERVICE_URL + "/getSpotInstance");
   }
+
+  deleteInstanceFromFile(vm : any) : Observable<any> {
+    return this.http.delete<any>(this.SERVICE_URL + "/deleteSpotInstance" + "/" + vm.id);
+  }
 }

@@ -124,6 +124,27 @@ app.get("/getSpotInstance", (req, res) => {
 
 });
 
+app.delete("/deleteSpotInstance/:id", (req, res) => {
+    const id = req.params.id;
+    let dbJsonData = []
+
+	if (!id) {
+		return res.sendStatus(400);
+	}
+
+    // with 'utf-8' part the function returns string instead of buffer
+    const vms = fs.readFileSync(path.resolve(__dirname, '../vm-organizer/src/assets/instances.json'), 'utf8');
+    if (vms.length !== 0) {
+        dbJsonData = JSON.parse(vms);
+    }
+
+    const changedJsonData = dbJsonData.filter(item => !item.tag.includes(id));
+
+    fs.writeFileSync(path.resolve(__dirname, '../vm-organizer/src/assets/instances.json'), JSON.stringify(changedJsonData));
+
+    res.sendStatus(204)
+})
+
 
 app.post("/vms/note", (req, res) => {
     console.log(req)
