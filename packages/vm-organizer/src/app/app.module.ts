@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTabsModule } from '@angular/material/tabs';
 import { SearchVm } from './shared/search.pipe';
 import { PoppappnoteComponent } from './component/poppappnote/poppappnote.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner'
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { PoppappnoteComponent } from './component/poppappnote/poppappnote.compon
     ReactiveFormsModule,
     ClipboardModule,
     MatTabsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

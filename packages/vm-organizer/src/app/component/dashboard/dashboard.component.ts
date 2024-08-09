@@ -34,7 +34,7 @@ export class DashboardComponent {
     }
 
     openDialogForAdding() {
-		  var popup = this.dialogRed.open(PopappformComponent);
+		  var popup = this.dialogRed.open(PopappformComponent, {disableClose: true});
       popup.afterClosed().subscribe({
         next: res => this.ngOnInit(),
         error: err => alert(err)
