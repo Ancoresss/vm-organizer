@@ -10,6 +10,8 @@ import { concatMap } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { PoppappnoteComponent } from '../poppappnote/poppappnote.component';
 
+
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -96,7 +98,7 @@ export class DashboardComponent {
     }
 
     editStatus(vm: Vm) {
-      let editStatus = vm.status === 'ON' ? 'OFF' : 'ON';
+      let editStatus = vm.status === 'ON' ? 'OFF' : 'ON';      
       this.spotInstances = []
 
       this.spotInstService.getInstanceFromFile().pipe(
@@ -113,6 +115,7 @@ export class DashboardComponent {
           if (editStatus === 'ON') {
             return this.spotInstService.startInstance(db_inst.groupId, db_inst.statefulId).pipe(
               tap(res => {
+                vm.status = 'LOADING'
                 let dbIntervalStatus = setInterval(() => {
                   this.spotInstService.getInstanceInfoByGroupId(db_inst.groupId).subscribe({
                     next: (resDbInfo: any) => {
@@ -127,7 +130,7 @@ export class DashboardComponent {
                                       vm.status = vm.status === 'ON' ? 'OFF' : 'ON';
                                       this.crudService.editVm(vm).subscribe({
                                         next: res => {          
-                                          clearInterval(appIntervalStatus)                                
+                                          clearInterval(appIntervalStatus)
                                           this.ngOnInit()
                                         },
                                         error: err => console.log(err)
@@ -154,7 +157,9 @@ export class DashboardComponent {
                   next: (res: any) => {
                     vm.status = vm.status === 'ON' ? 'OFF' : 'ON';
                     this.crudService.editVm(vm).subscribe({
-                      next: res => this.ngOnInit(),
+                      next: res => {
+                        this.ngOnInit()
+                      },
                       error: err => console.log(err)
                     });
                   },

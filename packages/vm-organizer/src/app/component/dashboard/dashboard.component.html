@@ -48,10 +48,14 @@
                           <td (click)="copyText(vm.password)">{{ vm.password }}</td>
                           <td><button type = "button" class="note-button"><img src="/assets/wirte.png" alt="image" (click)="openDialogForNote(vm)" class="note-img"></button></td>
                           <td>
-                            <button type="button"
-                                    [ngClass]="vm.status == 'ON' ? 'switch-on' : 'switch-off'"
-                                    class="btn btn-toggle px-3"
-                                    (click)="editStatus(vm)"></button>
+                            <button type="button" id = "btnToggle"
+                                    *ngIf="vm.status != 'LOADING'"
+                                    class="btn btn-primary btn-toggle px-3" 
+                                    [ngClass]="{'switch-on' : vm.status == 'ON', 'switch-off': vm.status == 'OFF'}"
+                                    (click)="editStatus(vm)">
+                                  </button>
+                           <span *ngIf="vm.status== 'LOADING'" class="spinner-border spinner-border-sm custom-spinner" role="status" ></span>
+
                           </td>
                           <td><div class="loader"></div></td>
                         </tr>

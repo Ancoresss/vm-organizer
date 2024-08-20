@@ -127,9 +127,6 @@ th, td {
   padding: 10px 20px;
 }
 
-.clickable {
-  cursor: pointer;
-}
 
 .btn-toggle {
   position: relative;
@@ -164,17 +161,22 @@ th, td {
 }
 
 
-.loader {
-  border: 4px solid #f3f3f3;
-  border-top:4px solid #3E54D3; 
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  animation: spin 2s linear infinite;
+.loading-spinner {
+  display: none;
+  margin-left: 8px;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+.btn-toggle.loading .btn-text {
+  visibility: hidden;
 }
 
+.btn-toggle.loading .loading-spinner {
+  display: inline-block;
+}
+
+.custom-spinner{
+  color: grey;
+  width: 1.8rem; 
+  height: 1.8rem; 
+  border-width: .2em;
+}
