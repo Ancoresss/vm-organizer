@@ -153,6 +153,7 @@ export class DashboardComponent {
           } else {
             return this.spotInstService.stopInstance(app_inst.groupId, app_inst.statefulId).pipe(
               tap(res => {
+                vm.status = 'LOADING'
                 return this.spotInstService.stopInstance(db_inst.groupId, db_inst.statefulId).subscribe({
                   next: (res: any) => {
                     vm.status = vm.status === 'ON' ? 'OFF' : 'ON';
