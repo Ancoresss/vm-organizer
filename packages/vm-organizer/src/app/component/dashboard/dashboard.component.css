@@ -180,3 +180,7 @@ th, td {
   height: 1.8rem; 
   border-width: .2em;
 }
+
+.clickable {
+  cursor: pointer;
+}
