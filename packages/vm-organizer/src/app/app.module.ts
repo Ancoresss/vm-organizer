@@ -13,7 +13,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTabsModule } from '@angular/material/tabs';
 import { SearchVm } from './shared/search.pipe';
 import { PoppappnoteComponent } from './component/poppappnote/poppappnote.component';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner'
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { PopapptaskComponent } from './component/popapptask/popapptask.component'
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner'
     DashboardComponent,
     PopappformComponent,
     SearchVm,
-    PoppappnoteComponent
+    PoppappnoteComponent,
+    PopapptaskComponent
   ],
   imports: [
     BrowserModule,

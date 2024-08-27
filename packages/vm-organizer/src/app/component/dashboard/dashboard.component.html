@@ -69,17 +69,19 @@
                     <mat-tab label="Tasks">
                       <div class="input-button-row">
                         <input type="text" class="form-control rounded m-3 w-75" placeholder="Search a task"/>
-                        <button type="button" class="btn btn-custom w-25" (click)="openDialogForAdding()">New Task</button>
+                        <button type="button" class="btn btn-custom w-25" (click)="openDialogForTask()">New Task</button>
+                        <button type = "button" class="trash-button"><img src="/assets/delete.png" alt="image" (click) = "deleteTask()" class="trash-img"></button>
+                        
                       </div>
-                        <table class="table table-borderless mb-0">
-                        <thead>
-                        <tr>
-                          <th scope="col">Task</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                      </table>
+                      <div class="task-list"></div>
+                      <div class="task-cards">
+                        
+                        <div class="task-card" *ngFor="let task of tasksArr"   [class.selected]="allSelectedTasks.includes(task.name)" (click)="selectTask(task.name)">
+                          <h4>{{ task.name }}</h4>
+                          <p>{{ task.description }}</p>
+                          
+                        </div>
+                      </div>
                     </mat-tab>
                   </mat-tab-group>                  
                 </div>            
