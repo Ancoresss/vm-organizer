@@ -6,7 +6,7 @@ import { PopappformComponent } from '../popappform/popappform.component';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SpotinstService } from '../../service/spotinst.service';
-import { concatMap } from 'rxjs';
+import { concatMap } from 'rxjs/operators';
 import { tap } from 'rxjs/operators';
 import { PoppappnoteComponent } from '../poppappnote/poppappnote.component';
 
@@ -184,45 +184,55 @@ export class DashboardComponent {
     }
 
     refreshStatus() {
-      console.log("refresh status")
-      this.spotInstService.getInstanceFromFile().pipe(
-        tap((res: any) => {
-          res.forEach((element: any) => {
-            this.spotInstService.getInstanceInfoByGroupId(element.groupId).pipe(
-              concatMap((res: any) => this.crudService.getAllVms().pipe(
-                tap((resInner: any) => resInner.forEach((elementResInner: any) => {
-                  if (element.tag.includes(elementResInner.id)) {
-                    switch(res.response.items[0].state) {
-                      case 'PAUSED': {
-                        elementResInner.status = 'OFF';
-                        break;
+      this.spotInstService.getInstanceFromFile().pipe( // instances.json
+        tap((allInstances: any) => {
+          for (let i = 0; i < allInstances.length; i+=2) {
+            this.spotInstService.getInstanceInfoByGroupId(allInstances[i].groupId).pipe( // spotinst app
+              tap((spotInstance: any) => {
+                console.log(allInstances[i].groupId)
+                console.log(allInstances[i + 1].groupId)
+                this.spotInstService.getInstanceInfoByGroupId(allInstances[i + 1].groupId).pipe( // db app
+                tap((dbInstance: any) => {
+                  this.crudService.getAllVms().pipe(
+                    tap((resInner: any) => resInner.forEach((elementResInner: any) => {
+                      console.log(elementResInner.id)
+                      if (allInstances[i].tag.includes(elementResInner.id)) {
+                        if (spotInstance.response.items[0].state === 'PAUSED' && dbInstance.response.items[0].state === 'PAUSED') {
+                          elementResInner.status = 'OFF';
+                        } else if (spotInstance.response.items[0].state === 'ACTIVE' && dbInstance.response.items[0].state === 'ACTIVE') {
+                          elementResInner.status = 'ON';
+                        } else {
+                          elementResInner.status = 'LOADING';
+                        }
+                        this.crudService.editVm(elementResInner).subscribe({
+                          next: res => {},
+                          error: err => console.log(err)
+                        })
                       }
-                      case 'ACTIVE': {
-                        elementResInner.status = 'ON';
-                        break;
-                      }
-                      default: {
-                        elementResInner.status = 'LOADING';
-                        break;
-                      }
-                    }
-                    this.crudService.editVm(elementResInner).subscribe({
-                      next: res => console.log(),
-                      error: err => console.log(err)
-                    })
-                  }
-                }))
-              ))
+                    }))
+                  ).subscribe({
+                    next: res => console.log(),
+                    error: err => console.log(err)
+                  })
+                })             
+              ).subscribe({
+                next: res => console.log(),
+                error: err => console.log(err)
+              })
+            })
             ).subscribe({
               next: res => console.log(),
               error: err => console.log(err)
             })
-          });
+          }
         })
       ).subscribe({
         next: res => console.log(),
         error: err => console.log(err)
-      })
+      })  
+      console.log('-----------------------------------')
+      console.log('last log')
+
       this.ngOnInit();
     }
 
