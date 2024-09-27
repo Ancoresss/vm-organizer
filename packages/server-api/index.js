@@ -188,48 +188,5 @@ app.post("/vms/note", (req, res) => {
 })
 
 
-app.post("/tasks", (req, res) => {
-	const content = req.body;
-    let jsonData = []
-
-	if (!content) {
-		return res.sendStatus(400);
-	}
-
-    // with 'utf-8' part the function returns string instead of buffer
-    const tasks = fs.readFileSync(path.resolve(__dirname, '../vm-organizer/src/assets/tasks.json'), 'utf8');
-    if (tasks.length !== 0) {
-        jsonData = JSON.parse(tasks);
-    }
-
-    jsonData.push(content);
-
-    fs.writeFileSync(path.resolve(__dirname, '../vm-organizer/src/assets/tasks.json'), JSON.stringify(jsonData));
-
-    res.setHeader('Content-Type', 'application/json');
-	res.send(JSON.stringify(content));
-});
-
-app.delete("/tasks/:name", (req, res) => {
-    const name = req.params.name;
-    let dbJsonData = []
-
-	if (!name) {
-		return res.sendStatus(400);
-	}
-
-    // with 'utf-8' part the function returns string instead of buffer
-    const tasks = fs.readFileSync(path.resolve(__dirname, '../vm-organizer/src/assets/tasks.json'), 'utf8');
-    if (tasks.length !== 0) {
-        dbJsonData = JSON.parse(tasks);
-    }
-
-    const changedJsonData = dbJsonData.filter(item => item.name !== name);
-
-    fs.writeFileSync(path.resolve(__dirname, '../vm-organizer/src/assets/tasks.json'), JSON.stringify(changedJsonData));
-
-    res.sendStatus(204)
-
-})
 
 app.listen(3000, () => console.log("API Server is running..."));
