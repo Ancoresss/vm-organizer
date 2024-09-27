@@ -111,6 +111,15 @@ th, td {
   border: none;
 }
 
+.trash-img{
+  height:30px;
+}
+
+.trash-button{
+  background-color: transparent;
+  border: none;
+}
+
 .gradient {
   background: #3E54D3;
   background: linear-gradient(
@@ -179,4 +188,49 @@ th, td {
   width: 1.8rem; 
   height: 1.8rem; 
   border-width: .2em;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.task-list {
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+}
+
+.task-form {
+  margin-bottom: 20px;
+}
+
+.task-form input, .task-form textarea {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.task-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px; 
+}
+
+.task-card {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: calc(50% - 16px); 
+}
+
+.task-card h3 {
+  margin-top: 0;
+}
+
+.task-card.selected {
+  background-color: #c8d9ff; 
 }

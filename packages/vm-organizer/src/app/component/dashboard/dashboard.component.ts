@@ -9,6 +9,8 @@ import { SpotinstService } from '../../service/spotinst.service';
 import { concatMap } from 'rxjs/operators';
 import { tap } from 'rxjs/operators';
 import { PoppappnoteComponent } from '../poppappnote/poppappnote.component';
+import { PopapptaskComponent } from '../popapptask/popapptask.component';
+import { Task } from '../../model/task';
 
 
 
@@ -23,6 +25,8 @@ export class DashboardComponent {
     searchVm = '';
     allSelectedVmTags: string[] = [];
     spotInstances: any = [];
+    tasksArr: Task[] = []; 
+    allSelectedTasks: string[] = [];
 
     constructor(private crudService : CrudService,
                 private dialogRed : MatDialog,
@@ -32,7 +36,9 @@ export class DashboardComponent {
 
     ngOnInit() {
       this.getAllVms();
+      this.getAllTasks();
       this.allSelectedVmTags = []
+      this.allSelectedTasks = []
     }
 
     openDialogForAdding() {
@@ -50,6 +56,34 @@ export class DashboardComponent {
         error: err => alert(err)
       })
 	  }
+
+    openDialogForTask() {
+      console.log('TEST')
+		  var popup = this.dialogRed.open(PopapptaskComponent, {});
+      popup.afterClosed().subscribe({
+        next: res => this.ngOnInit(),
+        error: err => alert(err)
+      })
+	  }
+
+    selectedTaskId: string | null = null; 
+
+    selectTask(taskName: string): void {
+      if (this.allSelectedTasks.includes(taskName)) {
+        this.allSelectedTasks = this.removeItem(this.allSelectedTasks, taskName);
+      } else {
+        this.allSelectedTasks.push(taskName);
+      }
+      console.log(this.allSelectedTasks)
+    }
+
+    // Delete the selected task
+    // deleteTask(): void {
+    //   if (this.selectedTaskId !== null) {
+    //     this.tasksArr = this.tasksArr.filter(task => task.name !== this.selectedTaskId);
+    //     this.selectedTaskId = null; // Deselect the task after deletion
+    //   }
+    // }
 
     onChange(vmTag : string): void {
       if (this.allSelectedVmTags.includes(vmTag)) {
@@ -69,6 +103,15 @@ export class DashboardComponent {
           {
               next: res => this.vmArr = res,
               error: err => alert("Unable to get Vms")
+          }
+      );
+    }
+
+    getAllTasks() {
+      this.crudService.getAllTasks().subscribe(
+          {
+              next: res => this.tasksArr = res,
+              error: err => alert("Unable to get tasks")
           }
       );
     }
@@ -96,6 +139,28 @@ export class DashboardComponent {
         }
       }
     }
+
+    deleteTask() {
+      console.log()
+      for (let i = 0; i < this.tasksArr.length; i++) {
+        for (let j = 0; j < this.allSelectedTasks.length; j++) {
+          if (this.tasksArr[i].name === this.allSelectedTasks[j]) {
+            console.log("Janka" +this.tasksArr[i].name)
+            // this doesn't work, need to debug
+            this.crudService.deleteTask(this.tasksArr[i]).subscribe({
+                  next: res => {
+                    this.tasksArr = this.removeItem(this.tasksArr, this.tasksArr[i]);
+                    this.allSelectedTasks = this.removeItem(this.allSelectedTasks, this.allSelectedTasks[j]);
+                    this.ngOnInit();
+                  },
+                  error: err => alert("Unable to detele task")
+              }
+          );
+          }
+        }
+      }
+    }
+
 
     editStatus(vm: Vm) {
       let editStatus = vm.status === 'ON' ? 'OFF' : 'ON';      
@@ -153,6 +218,7 @@ export class DashboardComponent {
           } else {
             return this.spotInstService.stopInstance(app_inst.groupId, app_inst.statefulId).pipe(
               tap(res => {
+                vm.status = 'LOADING'
                 return this.spotInstService.stopInstance(db_inst.groupId, db_inst.statefulId).subscribe({
                   next: (res: any) => {
                     vm.status = vm.status === 'ON' ? 'OFF' : 'ON';
