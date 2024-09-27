@@ -14,7 +14,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { SearchVm } from './shared/search.pipe';
 import { PoppappnoteComponent } from './component/poppappnote/poppappnote.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import { PopapptaskComponent } from './component/popapptask/popapptask.component'
 
 @NgModule({
   declarations: [
@@ -23,7 +22,7 @@ import { PopapptaskComponent } from './component/popapptask/popapptask.component
     PopappformComponent,
     SearchVm,
     PoppappnoteComponent,
-    PopapptaskComponent
+    
   ],
   imports: [
     BrowserModule,
