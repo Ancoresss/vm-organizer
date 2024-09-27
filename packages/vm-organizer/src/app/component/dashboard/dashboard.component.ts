@@ -22,7 +22,7 @@ export class DashboardComponent {
     vmForNote: Vm = new Vm;
     searchVm = '';
     allSelectedVmTags: string[] = [];
-    spotInstances: any = []; 
+    spotInstances: any = [];
 
     constructor(private crudService : CrudService,
                 private dialogRed : MatDialog,
@@ -33,7 +33,6 @@ export class DashboardComponent {
     ngOnInit() {
       this.getAllVms();
       this.allSelectedVmTags = []
-
     }
 
     openDialogForAdding() {
@@ -51,8 +50,6 @@ export class DashboardComponent {
         error: err => alert(err)
       })
 	  }
-
-
 
     onChange(vmTag : string): void {
       if (this.allSelectedVmTags.includes(vmTag)) {
@@ -75,8 +72,6 @@ export class DashboardComponent {
           }
       );
     }
-
-
 
     deleteVm() {
       for (let i = 0; i < this.vmArr.length; i++) {
@@ -101,9 +96,6 @@ export class DashboardComponent {
         }
       }
     }
-
-
-
 
     editStatus(vm: Vm) {
       let editStatus = vm.status === 'ON' ? 'OFF' : 'ON';      
@@ -161,7 +153,6 @@ export class DashboardComponent {
           } else {
             return this.spotInstService.stopInstance(app_inst.groupId, app_inst.statefulId).pipe(
               tap(res => {
-                vm.status = 'LOADING'
                 return this.spotInstService.stopInstance(db_inst.groupId, db_inst.statefulId).subscribe({
                   next: (res: any) => {
                     vm.status = vm.status === 'ON' ? 'OFF' : 'ON';
