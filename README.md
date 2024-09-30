@@ -10,7 +10,7 @@ Install and setup:
 
 **npm** commands should be executed via **cmd** or **PowerShell**.
 
-In case of the branch update, the `npm i -y`  should be executed.
+In case of a branch update, make sure to run the command `npm i -y`.
 
 
 ## Configuration after installation:
