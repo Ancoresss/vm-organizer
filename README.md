@@ -21,3 +21,7 @@ In case of the branch update, the `npm i -y`  should be executed.
 5. Create new token, copy it and paste in the "token" field in the spotinstConfig.json file.
 
 After this steps, you can use the application.
+
+
+## Limitations
+Application does not support AVA environments.
