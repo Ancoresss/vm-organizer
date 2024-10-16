@@ -57,7 +57,6 @@ export class DashboardComponent {
       } else {
         this.allSelectedVmTags.push(vmTag);
       }
-      console.log(this.allSelectedVmTags)
     }
 
     removeItem(array: any[], value: any) {
@@ -116,37 +115,42 @@ export class DashboardComponent {
             return this.spotInstService.startInstance(db_inst.groupId, db_inst.statefulId).pipe(
               tap(res => {
                 vm.status = 'LOADING'
-                let dbIntervalStatus = setInterval(() => {
-                  this.spotInstService.getInstanceInfoByGroupId(db_inst.groupId).subscribe({
-                    next: (resDbInfo: any) => {
-                        if (resDbInfo.response.items[0].state === 'ACTIVE') {
-                          this.spotInstService.startInstance(app_inst.groupId, app_inst.statefulId).subscribe({
-                            next: (res: any) => {
-                              clearInterval(dbIntervalStatus);
-                              let appIntervalStatus = setInterval(() => {
-                                this.spotInstService.getInstanceInfoByGroupId(app_inst.groupId).subscribe({
-                                  next: (resAppInfo: any) => { 
-                                    if (resAppInfo.response.items[0].state === 'ACTIVE') {
-                                      vm.status = vm.status === 'ON' ? 'OFF' : 'ON';
-                                      this.crudService.editVm(vm).subscribe({
-                                        next: res => {          
-                                          clearInterval(appIntervalStatus)
-                                          this.ngOnInit()
-                                        },
-                                        error: err => console.log(err)
-                                      });
-                                    }
-                                  },
-                                  error: err => console.log(err)})
-                              }, 15000)
-                              console.log("starting app instance: " + app_inst.tag)},
-                            error: err => console.log(err)
-                          })
-                        }
-                      },
-                      error: err => console.log(err)
-                    });
-                }, 15000);
+                this.crudService.editVm(vm).subscribe({
+                  next: res => {          
+                    let dbIntervalStatus = setInterval(() => {
+                      this.spotInstService.getInstanceInfoByGroupId(db_inst.groupId).subscribe({
+                        next: (resDbInfo: any) => {
+                            if (resDbInfo.response.items[0].state === 'ACTIVE') {
+                              this.spotInstService.startInstance(app_inst.groupId, app_inst.statefulId).subscribe({
+                                next: (res: any) => {
+                                  clearInterval(dbIntervalStatus);
+                                  let appIntervalStatus = setInterval(() => {
+                                    this.spotInstService.getInstanceInfoByGroupId(app_inst.groupId).subscribe({
+                                      next: (resAppInfo: any) => { 
+                                        if (resAppInfo.response.items[0].state === 'ACTIVE') {
+                                          vm.status = vm.status === 'ON' ? 'OFF' : 'ON';
+                                          this.crudService.editVm(vm).subscribe({
+                                            next: res => {          
+                                              clearInterval(appIntervalStatus)
+                                              this.ngOnInit()
+                                            },
+                                            error: err => console.log(err)
+                                          });
+                                        }
+                                      },
+                                      error: err => console.log(err)})
+                                  }, 15000)
+                                  console.log("starting app instance: " + app_inst.tag)},
+                                error: err => console.log(err)
+                              })
+                            }
+                          },
+                          error: err => console.log(err)
+                        });
+                    }, 15000);
+                  },
+                  error: err => console.log(err)
+                });
                 console.log("starting db instance: " + db_inst.tag)
               })
             )
@@ -155,10 +159,35 @@ export class DashboardComponent {
               tap(res => {
                 return this.spotInstService.stopInstance(db_inst.groupId, db_inst.statefulId).subscribe({
                   next: (res: any) => {
-                    vm.status = vm.status === 'ON' ? 'OFF' : 'ON';
+                    vm.status = 'LOADING'
                     this.crudService.editVm(vm).subscribe({
                       next: res => {
-                        this.ngOnInit()
+                        let instanceOffInterval = setInterval(() => {
+                          this.spotInstService.getInstanceInfoByGroupId(app_inst.groupId).subscribe({
+                            next: (app_inst_res: any) => {
+                              this.spotInstService.getInstanceInfoByGroupId(db_inst.groupId).subscribe({
+                                next: (db_inst_res: any) => {
+                                  console.log('here ' + app_inst_res.response.items[0].state)
+                                  console.log('here2 ' + db_inst_res.response.items[0].state)
+                                  if (app_inst_res.response.items[0].state === 'PAUSED' && db_inst_res.response.items[0].state === 'PAUSED') {
+                                    vm.status = 'OFF'
+                                    clearInterval(instanceOffInterval)
+                                  } else {
+                                    vm.status = 'LOADING'
+                                  }
+                                  this.crudService.editVm(vm).subscribe({
+                                    next: res => {
+                                      this.ngOnInit()
+                                    },
+                                    error: err => console.log(err)
+                                  });
+                                },
+                                error: err => console.log(err)
+                              })
+                            },
+                            error: err => console.log(err)
+                          })
+                        }, 15000)
                       },
                       error: err => console.log(err)
                     });
@@ -189,13 +218,10 @@ export class DashboardComponent {
           for (let i = 0; i < allInstances.length; i+=2) {
             this.spotInstService.getInstanceInfoByGroupId(allInstances[i].groupId).pipe( // spotinst app
               tap((spotInstance: any) => {
-                console.log(allInstances[i].groupId)
-                console.log(allInstances[i + 1].groupId)
                 this.spotInstService.getInstanceInfoByGroupId(allInstances[i + 1].groupId).pipe( // db app
                 tap((dbInstance: any) => {
                   this.crudService.getAllVms().pipe(
                     tap((resInner: any) => resInner.forEach((elementResInner: any) => {
-                      console.log(elementResInner.id)
                       if (allInstances[i].tag.includes(elementResInner.id)) {
                         if (spotInstance.response.items[0].state === 'PAUSED' && dbInstance.response.items[0].state === 'PAUSED') {
                           elementResInner.status = 'OFF';
