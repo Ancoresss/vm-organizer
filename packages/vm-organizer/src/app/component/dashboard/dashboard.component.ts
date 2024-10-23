@@ -167,8 +167,6 @@ export class DashboardComponent {
                             next: (app_inst_res: any) => {
                               this.spotInstService.getInstanceInfoByGroupId(db_inst.groupId).subscribe({
                                 next: (db_inst_res: any) => {
-                                  console.log('here ' + app_inst_res.response.items[0].state)
-                                  console.log('here2 ' + db_inst_res.response.items[0].state)
                                   if (app_inst_res.response.items[0].state === 'PAUSED' && db_inst_res.response.items[0].state === 'PAUSED') {
                                     vm.status = 'OFF'
                                     clearInterval(instanceOffInterval)
@@ -218,7 +216,7 @@ export class DashboardComponent {
           for (let i = 0; i < allInstances.length; i+=2) {
             this.spotInstService.getInstanceInfoByGroupId(allInstances[i].groupId).pipe( // spotinst app
               tap((spotInstance: any) => {
-                this.spotInstService.getInstanceInfoByGroupId(allInstances[i + 1].groupId).pipe( // db app
+                this.spotInstService.getInstanceInfoByGroupId(allInstances[i + 1].groupId).pipe( // spotinst db
                 tap((dbInstance: any) => {
                   this.crudService.getAllVms().pipe(
                     tap((resInner: any) => resInner.forEach((elementResInner: any) => {
@@ -231,7 +229,7 @@ export class DashboardComponent {
                           elementResInner.status = 'LOADING';
                         }
                         this.crudService.editVm(elementResInner).subscribe({
-                          next: res => {},
+                          next: res => {this.ngOnInit()},
                           error: err => console.log(err)
                         })
                       }
