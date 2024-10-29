@@ -18,7 +18,7 @@
                           <p style="color: #B0B0B0;">-- Click on text to copy it --</p>
                         </div>
                         <div class="d-flex align-items-start justify-content-end col-6">
-                          <div class="me-3 clickable" (click)="refreshStatus()"><img src="../../../assets/sync.png" width="24" height="24" alt="reload"></div>
+                          <div class="me-3 clickable" [ngClass]="{'rotate disabled': isRefreshing}" (click)="refreshStatus()"><img src="../../../assets/sync.png" width="24" height="24" alt="reload"></div> <!-- [ngClass]="{'rotate': isRefreshing}" -->
                         </div>
                       </div>
                     </div>

@@ -23,6 +23,7 @@ export class DashboardComponent {
     searchVm = '';
     allSelectedVmTags: string[] = [];
     spotInstances: any = [];
+    isRefreshing: boolean = false;
 
     constructor(private crudService : CrudService,
                 private dialogRed : MatDialog,
@@ -211,6 +212,7 @@ export class DashboardComponent {
     }
 
     refreshStatus() {
+      this.isRefreshing = true;
       this.spotInstService.getInstanceFromFile().pipe( // instances.json
         tap((allInstances: any) => {
           for (let i = 0; i < allInstances.length; i+=2) {
@@ -229,7 +231,12 @@ export class DashboardComponent {
                           elementResInner.status = 'LOADING';
                         }
                         this.crudService.editVm(elementResInner).subscribe({
-                          next: res => {this.ngOnInit()},
+                          next: res => {
+                            if (i === allInstances.length - 2) {
+                              this.ngOnInit(); 
+                              this.isRefreshing = false;
+                            }
+                          },
                           error: err => console.log(err)
                         })
                       }
