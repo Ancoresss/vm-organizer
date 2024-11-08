@@ -232,10 +232,10 @@ export class DashboardComponent {
                         }
                         this.crudService.editVm(elementResInner).subscribe({
                           next: res => {
-                            if (i === allInstances.length - 2) {
-                              this.ngOnInit(); 
+                            if (i === allInstances.length - 2) { 
                               this.isRefreshing = false;
                             }
+                            this.ngOnInit();
                           },
                           error: err => console.log(err)
                         })
