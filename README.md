@@ -44,7 +44,7 @@ After these steps, you can use the application.
 
 A: The status should be checked and updated directly on SpotInst. Once updated, use the **Refresh** button to synchronize and reflect the changes in the application.
 
-**Q: What if the VM addition process continues endlessly??**
+**Q: What if the VM addition process continues endlessly?**
 
 A: 
 1. Refresh the application by reloading the entire web page.
