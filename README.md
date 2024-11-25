@@ -25,6 +25,7 @@ After these steps, you can use the application.
 ## Limitations
 1. AVA environments are not supported.
 2. Performance environments are not supported.
+3. APF environments are not supported.
 
 ## Manual
 1. To add a new environment, click the **Add VM** button. This will search for two instances (Database and Application) in SpotInst and add them to your VM list.
